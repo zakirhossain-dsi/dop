@@ -1,0 +1,15 @@
+version: 0.0
+os: linux
+hooks:
+
+  BeforeInstall:
+    - location: scripts/deploy.sh
+      runas: root
+
+  AfterInstall:
+    - location: scripts/chmod.sh
+      runas: root
+
+  ApplicationStart:
+    - location: scripts/start.sh
+      runas: root

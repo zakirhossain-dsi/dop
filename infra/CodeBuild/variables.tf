@@ -21,3 +21,14 @@ variable "artifact_prefix" {
 variable "github_repo_https_url" {
   type = string
 }
+
+variable "ami_id" {
+  type = string
+}
+variable "ec2_instance_type" {
+  type = string
+}
+
+variable "ssh_ip_cidr" {
+  type = string
+}

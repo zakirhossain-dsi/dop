@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "artifacts" {
-  bucket = var.artifact_bucket_name
+  bucket        = var.artifact_bucket_name
   force_destroy = true
 }
 
