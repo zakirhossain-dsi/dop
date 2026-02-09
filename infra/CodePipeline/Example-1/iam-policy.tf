@@ -13,6 +13,7 @@ data "aws_iam_policy_document" "codebuild_policy" {
   statement {
     actions = [
       "s3:PutObject",
+      "s3:GetObject",
       "s3:AbortMultipartUpload",
       "s3:ListBucket",
       "s3:GetBucketLocation"
