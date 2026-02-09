@@ -34,7 +34,6 @@ resource "aws_iam_policy" "codebuild_policy" {
 data "aws_iam_policy_document" "codepipeline_policy" {
   statement {
     effect = "Allow"
-
     actions = [
       "s3:GetObject",
       "s3:GetObjectVersion",
@@ -42,7 +41,6 @@ data "aws_iam_policy_document" "codepipeline_policy" {
       "s3:PutObjectAcl",
       "s3:PutObject",
     ]
-
     resources = [
       aws_s3_bucket.artifacts.arn,
       "${aws_s3_bucket.artifacts.arn}/*"
@@ -57,13 +55,29 @@ data "aws_iam_policy_document" "codepipeline_policy" {
 
   statement {
     effect = "Allow"
-
     actions = [
       "codebuild:BatchGetBuilds",
       "codebuild:StartBuild",
     ]
-
     resources = ["*"]
+  }
+
+  statement {
+    sid    = "CodeDeployDeployments"
+    effect = "Allow"
+    actions = [
+      "codedeploy:CreateDeployment",
+      "codedeploy:GetApplication",
+      "codedeploy:GetApplicationRevision",
+      "codedeploy:GetDeployment",
+      "codedeploy:GetDeploymentConfig",
+      "codedeploy:GetDeploymentGroup",
+      "codedeploy:RegisterApplicationRevision"
+    ]
+    resources = [
+      aws_codedeploy_app.codedeploy_app.arn,
+      aws_codedeploy_deployment_group.codedeploy_deployment_group.arn
+    ]
   }
 }
 
