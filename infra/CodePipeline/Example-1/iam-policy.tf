@@ -79,6 +79,15 @@ data "aws_iam_policy_document" "codepipeline_policy" {
       aws_codedeploy_deployment_group.codedeploy_deployment_group.arn
     ]
   }
+  # Deployment configs are AWS-managed ARNs; easiest is allow all configs
+  statement {
+    sid    = "CodeDeployDeploymentConfigs"
+    effect = "Allow"
+    actions = [
+      "codedeploy:GetDeploymentConfig"
+    ]
+    resources = ["*"]
+  }
 }
 
 resource "aws_iam_policy" "codepipeline_policy" {
