@@ -85,5 +85,3 @@ resource "aws_iam_policy" "codepipeline_policy" {
   name   = "${var.project_name}-codepipeline-policy"
   policy = data.aws_iam_policy_document.codepipeline_policy.json
 }
-
-
