@@ -7,10 +7,15 @@ phases:
   build:
     commands:
       - echo "Building with Maven..."
-      - mvn -B clean install
+      - mvn -B clean package
+      - echo "Preparing CodeDeploy bundle..."
+      - mkdir -p bundle/scripts
+      - cp appspec.yml bundle/
+      - cp -r scripts/* bundle/scripts/
+      - cp target/dop-1.0-SNAPSHOT.jar bundle/
 
 artifacts:
     files:
         - '**/*'
-    base-directory: $CODEBUILD_SRC_DIR
+    base-directory: bundle
     discard-paths: no

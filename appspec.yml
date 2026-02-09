@@ -1,5 +1,19 @@
 version: 0.0
 os: linux
+
 files:
   - source: dop-1.0-SNAPSHOT.jar
-    destination: /tmp
+    destination: /opt/dop
+
+hooks:
+  BeforeInstall:
+    - location: scripts/before_install.sh
+      runas: root
+
+  ApplicationStop:
+    - location: scripts/stop.sh
+      runas: root
+
+  ApplicationStart:
+    - location: scripts/start.sh
+      runas: root
