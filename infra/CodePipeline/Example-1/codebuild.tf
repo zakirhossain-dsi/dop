@@ -5,7 +5,7 @@ resource "aws_codebuild_project" "maven_build" {
   service_role  = aws_iam_role.roles["codebuild"].arn
 
   artifacts {
-    type = "NO_ARTIFACTS"
+    type = "CODEPIPELINE"
   }
 
   environment {
@@ -25,16 +25,9 @@ resource "aws_codebuild_project" "maven_build" {
   }
 
   source {
-    type            = "GITHUB"
-    location        = var.github_repo_https_url
-    git_clone_depth = 1
-    buildspec       = file("${path.module}/buildspec.yml")
-
-    git_submodules_config {
-      fetch_submodules = true
-    }
+    type = "CODEPIPELINE"
+    buildspec = file("${path.module}/buildspec.yml")
   }
-  source_version = "master"
 
   logs_config {
     cloudwatch_logs {
@@ -42,5 +35,4 @@ resource "aws_codebuild_project" "maven_build" {
       stream_name = "maven"
     }
   }
-
 }

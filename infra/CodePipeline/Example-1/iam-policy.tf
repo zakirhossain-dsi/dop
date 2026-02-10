@@ -88,6 +88,16 @@ data "aws_iam_policy_document" "codepipeline_policy" {
     ]
     resources = ["*"]
   }
+
+  statement {
+    sid    = "CodeBuildStartBuild"
+    effect = "Allow"
+    actions = [
+      "codebuild:StartBuild",
+      "codebuild:BatchGetBuilds"
+    ]
+    resources = [aws_codebuild_project.maven_build.arn]
+  }
 }
 
 resource "aws_iam_policy" "codepipeline_policy" {
