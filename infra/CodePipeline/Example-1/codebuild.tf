@@ -21,7 +21,7 @@ resource "aws_codebuild_project" "maven_build" {
   }
 
   source {
-    type = "CODEPIPELINE"
+    type      = "CODEPIPELINE"
     buildspec = file("${path.module}/buildspec.yml")
   }
 
