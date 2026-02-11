@@ -1,0 +1,17 @@
+#!/bin/bash
+set -euxo pipefail
+
+dnf update -y
+
+# Install Java 17 (Amazon Corretto)
+dnf install -y java-17-amazon-corretto
+
+# Install CodeDeploy agent (Amazon Linux)
+dnf install -y ruby wget
+
+cd /home/ec2-user
+wget https://aws-codedeploy-${aws_region}.s3.${aws_region}.amazonaws.com/latest/install
+chmod +x ./install
+./install auto
+
+systemctl enable --now codedeploy-agent

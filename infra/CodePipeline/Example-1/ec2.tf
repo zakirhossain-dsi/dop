@@ -7,25 +7,11 @@ resource "aws_instance" "app_server" {
     aws_security_group.ssh_access.id
   ]
 
-  user_data = <<-EOF
-    #!/bin/bash
-    set -euxo pipefail
+  user_data = templatefile("${path.module}/user_data.sh.tftpl", {
+    aws_region = var.aws_region
+  })
 
-    yum update -y
-    yum install -y ruby wget
-
-    cd /home/ec2-user
-    wget https://aws-codedeploy-${var.aws_region}.s3.${var.aws_region}.amazonaws.com/latest/install
-    chmod +x ./install
-    ./install auto
-
-    systemctl enable codedeploy-agent
-    systemctl start codedeploy-agent
-
-    # Install Java
-    dnf update -y
-    dnf install -y java-17-amazon-corretto
-  EOF
+  user_data_replace_on_change = true
 
   tags = {
     Name = "${var.project_name}-app"
