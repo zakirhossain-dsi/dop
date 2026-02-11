@@ -41,6 +41,20 @@ resource "aws_codepipeline" "codepipeline" {
   }
 
   stage {
+    name = "Approval"
+    action {
+      name     = "ManualApproval"
+      category = "Approval"
+      owner    = "AWS"
+      provider = "Manual"
+      version  = "1"
+      configuration = {
+        CustomData = "Please approve the deployment to production."
+      }
+    }
+  }
+
+  stage {
     name = "Deploy"
     action {
       name            = "Deploy"
