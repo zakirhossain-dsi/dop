@@ -1,5 +1,5 @@
 locals {
-  eb_policies = var.eb_policies
+  eb_policies  = var.eb_policies
   ec2_policies = var.ec2_policies
 }
 

@@ -11,11 +11,11 @@ variable "project_name" {
 }
 
 variable "eb_policies" {
-  type    = list(string)
+  type = list(string)
 }
 
 variable "ec2_policies" {
-    type    = list(string)
+  type = list(string)
 }
 
 variable "platform_arn" {
