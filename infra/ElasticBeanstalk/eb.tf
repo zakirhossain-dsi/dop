@@ -28,11 +28,6 @@ resource "aws_elastic_beanstalk_environment" "dop_eb_env" {
     value     = aws_iam_role.roles["eb-service"].name
   }
   setting {
-    namespace = "aws:elasticbeanstalk:environment"
-    name      = "EnvironmentType"
-    value     = "SingleInstance"
-  }
-  setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "IamInstanceProfile"
     value     = aws_iam_instance_profile.eb_instance_profile.name
