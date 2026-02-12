@@ -57,6 +57,21 @@ resource "aws_elastic_beanstalk_environment" "dop_eb_env" {
     name      = "InstanceTypes"
     value     = "t2.micro,t3.micro"
   }
+  setting {
+    namespace = "aws:elasticbeanstalk:command"
+    name      = "DeploymentPolicy"
+    value     = "Rolling"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:command"
+    name      = "BatchSizeType"
+    value     = "Fixed"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:command"
+    name      = "BatchSize"
+    value     = "1"
+  }
 }
 
 resource "aws_iam_instance_profile" "eb_instance_profile" {
