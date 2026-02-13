@@ -46,6 +46,7 @@ doc/
 **/terraform.tfstate
 **/terraform.tfstate.*
 **/terraform.tfvars
+*.zip
 
 # Crash logs
 crash.log
