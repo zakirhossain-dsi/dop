@@ -1,0 +1,167 @@
+{
+  "version": "0",
+  "id": "d4d5a0b9-92cb-18bd-0365-ae430c9260df",
+  "detail-type": "CodeBuild Build State Change",
+  "source": "aws.codebuild",
+  "account": "153761978087",
+  "time": "2026-02-14T14:23:17Z",
+  "region": "ap-southeast-1",
+  "resources": [
+    "arn:aws:codebuild:ap-southeast-1:153761978087:build/cicd-workflow-build:ef7a4878-e21c-4237-aa06-54bf2b92d80b"
+  ],
+  "detail": {
+    "build-status": "SUCCEEDED",
+    "project-name": "cicd-workflow-build",
+    "build-id": "arn:aws:codebuild:ap-southeast-1:153761978087:build/cicd-workflow-build:ef7a4878-e21c-4237-aa06-54bf2b92d80b",
+    "additional-information": {
+      "cache": {
+        "type": "NO_CACHE"
+      },
+      "build-number": 17,
+      "timeout-in-minutes": 60,
+      "build-complete": true,
+      "initiator": "cicd-workflow-lambda-role/cicd-workflow-pr-trigger",
+      "build-start-time": "Feb 14, 2026 2:22:08 PM",
+      "source": {
+        "buildspec": "version: 0.2\nphases:\n  install:\n    runtime-versions:\n      java: corretto17\n  build:\n    commands:\n      - echo \"Building the application...\"\n      - mvn -B clean install",
+        "location": "https://git-codecommit.ap-southeast-1.amazonaws.com/v1/repos/dop",
+        "git-clone-depth": 0,
+        "type": "CODECOMMIT"
+      },
+      "source-version": "c1d767dd13a59b0a5ac82848f6c1c8aac8d074c9",
+      "artifact": {
+        "location": ""
+      },
+      "environment": {
+        "image": "aws/codebuild/standard:5.0",
+        "privileged-mode": false,
+        "image-pull-credentials-type": "CODEBUILD",
+        "compute-type": "BUILD_GENERAL1_SMALL",
+        "type": "LINUX_CONTAINER",
+        "environment-variables": [
+          {
+            "name": "PULL_REQUEST_ID",
+            "type": "PLAINTEXT",
+            "value": "6"
+          },
+          {
+            "name": "REPO_NAME",
+            "type": "PLAINTEXT",
+            "value": "dop"
+          }
+        ]
+      },
+      "logs": {
+        "group-name": "/aws/codebuild/cicd-workflow-build",
+        "stream-name": "ef7a4878-e21c-4237-aa06-54bf2b92d80b",
+        "deep-link": "https://console.aws.amazon.com/cloudwatch/home?region=ap-southeast-1#logsV2:log-groups/log-group/$252Faws$252Fcodebuild$252Fcicd-workflow-build/log-events/ef7a4878-e21c-4237-aa06-54bf2b92d80b"
+      },
+      "phases": [
+        {
+          "phase-context": [],
+          "start-time": "Feb 14, 2026 2:22:08 PM",
+          "end-time": "Feb 14, 2026 2:22:09 PM",
+          "duration-in-seconds": 0,
+          "phase-type": "SUBMITTED",
+          "phase-status": "SUCCEEDED"
+        },
+        {
+          "phase-context": [],
+          "start-time": "Feb 14, 2026 2:22:09 PM",
+          "end-time": "Feb 14, 2026 2:22:09 PM",
+          "duration-in-seconds": 0,
+          "phase-type": "QUEUED",
+          "phase-status": "SUCCEEDED"
+        },
+        {
+          "phase-context": [
+            ": "
+          ],
+          "start-time": "Feb 14, 2026 2:22:09 PM",
+          "end-time": "Feb 14, 2026 2:22:13 PM",
+          "duration-in-seconds": 3,
+          "phase-type": "PROVISIONING",
+          "phase-status": "SUCCEEDED"
+        },
+        {
+          "phase-context": [
+            ": "
+          ],
+          "start-time": "Feb 14, 2026 2:22:13 PM",
+          "end-time": "Feb 14, 2026 2:22:44 PM",
+          "duration-in-seconds": 30,
+          "phase-type": "DOWNLOAD_SOURCE",
+          "phase-status": "SUCCEEDED"
+        },
+        {
+          "phase-context": [
+            ": "
+          ],
+          "start-time": "Feb 14, 2026 2:22:44 PM",
+          "end-time": "Feb 14, 2026 2:22:44 PM",
+          "duration-in-seconds": 0,
+          "phase-type": "INSTALL",
+          "phase-status": "SUCCEEDED"
+        },
+        {
+          "phase-context": [
+            ": "
+          ],
+          "start-time": "Feb 14, 2026 2:22:44 PM",
+          "end-time": "Feb 14, 2026 2:22:44 PM",
+          "duration-in-seconds": 0,
+          "phase-type": "PRE_BUILD",
+          "phase-status": "SUCCEEDED"
+        },
+        {
+          "phase-context": [
+            ": "
+          ],
+          "start-time": "Feb 14, 2026 2:22:44 PM",
+          "end-time": "Feb 14, 2026 2:23:16 PM",
+          "duration-in-seconds": 32,
+          "phase-type": "BUILD",
+          "phase-status": "SUCCEEDED"
+        },
+        {
+          "phase-context": [
+            ": "
+          ],
+          "start-time": "Feb 14, 2026 2:23:16 PM",
+          "end-time": "Feb 14, 2026 2:23:16 PM",
+          "duration-in-seconds": 0,
+          "phase-type": "POST_BUILD",
+          "phase-status": "SUCCEEDED"
+        },
+        {
+          "phase-context": [
+            ": "
+          ],
+          "start-time": "Feb 14, 2026 2:23:16 PM",
+          "end-time": "Feb 14, 2026 2:23:16 PM",
+          "duration-in-seconds": 0,
+          "phase-type": "UPLOAD_ARTIFACTS",
+          "phase-status": "SUCCEEDED"
+        },
+        {
+          "phase-context": [
+            ": "
+          ],
+          "start-time": "Feb 14, 2026 2:23:16 PM",
+          "end-time": "Feb 14, 2026 2:23:16 PM",
+          "duration-in-seconds": 0,
+          "phase-type": "FINALIZING",
+          "phase-status": "SUCCEEDED"
+        },
+        {
+          "start-time": "Feb 14, 2026 2:23:16 PM",
+          "phase-type": "COMPLETED"
+        }
+      ],
+      "queued-timeout-in-minutes": 480
+    },
+    "current-phase": "COMPLETED",
+    "current-phase-context": "[: ]",
+    "version": "1"
+  }
+}

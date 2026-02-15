@@ -1,0 +1,32 @@
+{
+  "version": "0",
+  "id": "57d6b2f1-70b6-aa47-f684-f8da018be274",
+  "detail-type": "CodeCommit Pull Request State Change",
+  "source": "aws.codecommit",
+  "account": "153761978087",
+  "time": "2026-02-14T14:22:08Z",
+  "region": "ap-southeast-1",
+  "resources": [
+    "arn:aws:codecommit:ap-southeast-1:153761978087:dop"
+  ],
+  "detail": {
+    "author": "arn:aws:iam::153761978087:user/zakir",
+    "callerUserArn": "arn:aws:iam::153761978087:user/zakir",
+    "creationDate": "Sat Feb 14 14:22:02 UTC 2026",
+    "destinationCommit": "ce06c8c9d253bf9ea73b151d5d01142d532cb660",
+    "destinationReference": "refs/heads/master",
+    "event": "pullRequestCreated",
+    "isMerged": "False",
+    "lastModifiedDate": "Sat Feb 14 14:22:02 UTC 2026",
+    "notificationBody": "A pull request event occurred in the following AWS CodeCommit repository: dop. User: arn:aws:iam::153761978087:user/zakir. Event: Created. Pull request name: 6. Additional information: A pull request was created with the following ID: 6. The title of the pull request is: add duplicate greeting message in Main.java\n. For more information, go to the AWS CodeCommit console https://ap-southeast-1.console.aws.amazon.com/codesuite/codecommit/repositories/dop/pull-requests/6?region=ap-southeast-1.",
+    "pullRequestId": "6",
+    "pullRequestStatus": "Open",
+    "repositoryNames": [
+      "dop"
+    ],
+    "revisionId": "31a6bed41ea4d0f1de5ffb26b4da49fd0b3b9ab3be71f75e6220470ae805c4b9",
+    "sourceCommit": "c1d767dd13a59b0a5ac82848f6c1c8aac8d074c9",
+    "sourceReference": "refs/heads/mca",
+    "title": "add duplicate greeting message in Main.java\n"
+  }
+}

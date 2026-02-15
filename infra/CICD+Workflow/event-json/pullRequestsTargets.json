@@ -1,0 +1,11 @@
+{
+  "repositoryName": "dop",
+  "sourceReference": "refs/heads/mca",
+  "destinationReference": "refs/heads/master",
+  "destinationCommit": "ce06c8c9d253bf9ea73b151d5d01142d532cb660",
+  "sourceCommit": "c1d767dd13a59b0a5ac82848f6c1c8aac8d074c9",
+  "mergeBase": "ce06c8c9d253bf9ea73b151d5d01142d532cb660",
+  "mergeMetadata": {
+    "isMerged": False
+  }
+}
