@@ -33,7 +33,6 @@ resource "aws_iam_policy" "codebuild_policy" {
 
 data "aws_iam_policy_document" "codepipeline_policy" {
   statement {
-    effect = "Allow"
     actions = [
       "s3:GetObject",
       "s3:GetObjectVersion",
@@ -54,7 +53,6 @@ data "aws_iam_policy_document" "codepipeline_policy" {
   }
 
   statement {
-    effect = "Allow"
     actions = [
       "codebuild:BatchGetBuilds",
       "codebuild:StartBuild",
@@ -64,7 +62,6 @@ data "aws_iam_policy_document" "codepipeline_policy" {
 
   statement {
     sid    = "CodeDeployDeployments"
-    effect = "Allow"
     actions = [
       "codedeploy:CreateDeployment",
       "codedeploy:GetApplication",
@@ -82,7 +79,6 @@ data "aws_iam_policy_document" "codepipeline_policy" {
   # Deployment configs are AWS-managed ARNs; easiest is allow all configs
   statement {
     sid    = "CodeDeployDeploymentConfigs"
-    effect = "Allow"
     actions = [
       "codedeploy:GetDeploymentConfig"
     ]
@@ -91,7 +87,6 @@ data "aws_iam_policy_document" "codepipeline_policy" {
 
   statement {
     sid    = "CodeBuildStartBuild"
-    effect = "Allow"
     actions = [
       "codebuild:StartBuild",
       "codebuild:BatchGetBuilds"

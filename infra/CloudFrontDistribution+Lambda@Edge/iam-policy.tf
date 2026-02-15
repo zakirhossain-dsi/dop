@@ -1,7 +1,6 @@
 data "aws_iam_policy_document" "cf_bucket_doc" {
   statement {
     sid    = "AllowCloudFrontRead"
-    effect = "Allow"
     principals {
       type        = "Service"
       identifiers = ["cloudfront.amazonaws.com"]
