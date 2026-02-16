@@ -40,3 +40,4 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
   cidr_ipv4         = var.cidr_ip_all
   ip_protocol       = "-1" # semantically equivalent to all ports
 }
+
