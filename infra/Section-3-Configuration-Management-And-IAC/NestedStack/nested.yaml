@@ -1,0 +1,13 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  myStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://cf-central-repo.s3.ap-southeast-1.amazonaws.com/templates/s3_bucket.template
+      TimeoutInMinutes: 60
+
+Outputs:
+  StackRef:
+    Value: !Ref myStack
+  OutputFromNestedStack:
+    Value: !GetAtt myStack.Outputs.BucketName
