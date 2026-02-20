@@ -1,0 +1,8 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'CloudFormation template to create an SNS topic and subscription'
+
+Resources:
+  DemoSNSTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: demo-stackset-topic
