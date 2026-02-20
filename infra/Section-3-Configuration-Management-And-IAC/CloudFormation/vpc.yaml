@@ -1,0 +1,22 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: CloudFormation Template to create a VPC
+Resources:
+  MyVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: "10.77.0.0/16"
+      InstanceTenancy: default
+      Tags:
+        - Key: Name
+          Value: MyVPC
+        - Key: Environment
+          Value: Production
+  MySubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: ap-southeast-1a
+      CidrBlock: "10.77.0.0/24"
+      Tags:
+        - Key: Name
+          Value: MySubnet
+      VpcId: !Ref MyVPC
