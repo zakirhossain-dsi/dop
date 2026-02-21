@@ -1,0 +1,5 @@
+https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-waitcondition.html
+
+curl -X PUT \
+  -H 'Content-Type:' --data-binary '{"Status" : "SUCCESS","Reason" : "Configuration Complete","UniqueId" : "ID1234","Data" : "Application has completed configuration."}' \
+  "https://cloudformation-waitcondition-ap-southeast-1.s3-ap-southeast-1.amazonaws.com/arn%3Aaws%3Acloudformation%3Aap-southeast-1%3A153761978087%3Astack/DemoWaitCondition/c9722210-0ed1-11f1-b873-023f6bdfdad9/c972be50-0ed1-11f1-b873-023f6bdfdad9/PrivateWaitHandle?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20260221T030243Z&X-Amz-SignedHeaders=host&X-Amz-Expires=43199&X-Amz-Credential=AKIAXKFFXMS337UUQZVD%2F20260221%2Fap-southeast-1%2Fs3%2Faws4_request&X-Amz-Signature=548f113b7fd7bddfd568e5ae9d878769eb44e157925eab0c288d874b121cc3b0"
