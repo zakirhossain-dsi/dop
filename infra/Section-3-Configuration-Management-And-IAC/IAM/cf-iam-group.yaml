@@ -1,0 +1,7 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudFormation Template to create an IAM Group
+Resources:
+  Demo:
+    Type: AWS::IAM::Group
+    Properties:
+      GroupName: DemoGroup
