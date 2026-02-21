@@ -1,11 +1,6 @@
-provider "aws" {
-  region  = "ap-southeast-1"
-  profile = "terraform-admin"
-}
-
 resource "aws_instance" "app_server" {
-  ami                    = "ami-039a8ebebdd2a1def"
-  instance_type          = "t2.micro"
+  ami                    = var.ami_id
+  instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.ssh_access.id]
   iam_instance_profile   = aws_iam_instance_profile.ec2_profile.name
   user_data              = <<-EOF
@@ -30,13 +25,13 @@ resource "aws_vpc_security_group_ingress_rule" "allow_ssh_ipv4" {
   from_port         = 22
   to_port           = 22
   ip_protocol       = "tcp"
-  cidr_ipv4         = "0.0.0.0/0"
+  cidr_ipv4         = var.all_traffic
 }
 
 resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
   security_group_id = aws_security_group.ssh_access.id
   ip_protocol       = "-1"
-  cidr_ipv4         = "0.0.0.0/0"
+  cidr_ipv4         = var.all_traffic
 }
 
 resource "aws_iam_instance_profile" "ec2_profile" {
