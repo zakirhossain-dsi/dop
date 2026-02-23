@@ -11,4 +11,10 @@ resource "aws_lambda_function" "validator" {
   runtime          = var.python_version
   filename         = data.archive_file.validator_zip.output_path
   source_code_hash = data.archive_file.validator_zip.output_base64sha256
+
+  environment {
+    variables = {
+      ADMIN_POLICY_ARN = var.admin_access_policy_arn
+    }
+  }
 }
