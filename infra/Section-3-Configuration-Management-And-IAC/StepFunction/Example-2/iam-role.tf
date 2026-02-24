@@ -5,6 +5,7 @@ locals {
     lambda                  = "lambda.amazonaws.com"
     lambda_request_approval = "lambda.amazonaws.com"
     lambda_approver         = "lambda.amazonaws.com"
+    lambda_remediator       = "lambda.amazonaws.com"
   }
 }
 

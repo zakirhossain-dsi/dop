@@ -28,6 +28,11 @@ resource "aws_iam_role_policy_attachment" "lambda_approver_attach" {
   role       = aws_iam_role.iam_roles["lambda_approver"].name
 }
 
+resource "aws_iam_role_policy_attachment" "lambda_remediator_attach" {
+  policy_arn = aws_iam_policy.lambda_policy.arn
+  role       = aws_iam_role.iam_roles["lambda_remediator"].name
+}
+
 resource "aws_iam_role_policy" "lambda_approver_callback" {
   name = "${var.project_name}-lambda-approver-callback"
   role = aws_iam_role.iam_roles["lambda_approver"].id
@@ -38,6 +43,26 @@ resource "aws_iam_role_policy" "lambda_approver_callback" {
         Effect   = "Allow"
         Action   = ["states:SendTaskSuccess", "states:SendTaskFailure"]
         Resource = "*"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy" "lambda_remediator_callback" {
+  name = "${var.project_name}-lambda-remediator-callback"
+  role = aws_iam_role.iam_roles["lambda_remediator"].id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect   = "Allow"
+        Action   = ["iam:DetachUserPolicy"]
+        Resource = aws_iam_user.student.arn
+        Condition = {
+          StringEquals = {
+            "iam:PolicyARN" = var.admin_access_policy_arn
+          }
+        }
       }
     ]
   })

@@ -65,9 +65,18 @@ locals {
           {
             Variable     = "$.approval.decision"
             StringEquals = "REJECT"
-            Next         = "EndState"
+            Next         = "Remediator"
           }
         ]
+      }
+      Remediator = {
+        Type     = "Task"
+        Resource = "arn:aws:states:::lambda:invoke"
+        Parameters = {
+          FunctionName = aws_lambda_function.remediator.arn
+          "Payload.$"  = "$"
+        }
+        Next = "EndState"
       }
       EndState = {
         Type = "Succeed"

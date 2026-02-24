@@ -16,6 +16,12 @@ data "archive_file" "approver_zip" {
   output_path = "${path.module}/lambda/approver.zip"
 }
 
+data "archive_file" "remediator_zip" {
+  type        = "zip"
+  source_file = "${path.module}/lambda/remediator.py"
+  output_path = "${path.module}/lambda/remediator.zip"
+}
+
 resource "aws_lambda_function" "validator" {
   function_name    = "${var.project_name}-validator"
   role             = aws_iam_role.iam_roles["lambda"].arn
@@ -53,4 +59,19 @@ resource "aws_lambda_function" "approver" {
   runtime          = var.python_version
   filename         = data.archive_file.approver_zip.output_path
   source_code_hash = data.archive_file.approver_zip.output_base64sha256
+}
+
+resource "aws_lambda_function" "remediator" {
+  function_name    = "${var.project_name}-remediator"
+  role             = aws_iam_role.iam_roles["lambda_remediator"].arn
+  runtime          = var.python_version
+  handler          = "remediator.handler"
+  filename         = data.archive_file.remediator_zip.output_path
+  source_code_hash = data.archive_file.remediator_zip.output_base64sha256
+
+  environment {
+    variables = {
+      ADMIN_POLICY_ARN = var.admin_access_policy_arn
+    }
+  }
 }

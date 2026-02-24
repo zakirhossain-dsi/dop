@@ -10,7 +10,8 @@ data "aws_iam_policy_document" "sfn_policy_doc" {
     actions = ["lambda:InvokeFunction"]
     resources = [
       aws_lambda_function.validator.arn,
-      aws_lambda_function.request_approval.arn
+      aws_lambda_function.request_approval.arn,
+      aws_lambda_function.remediator.arn
     ]
   }
 }
