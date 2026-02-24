@@ -9,9 +9,9 @@ data "aws_iam_policy_document" "sfn_policy_doc" {
   statement {
     actions = ["lambda:InvokeFunction"]
     resources = [
-      aws_lambda_function.validator.arn,
-      aws_lambda_function.request_approval.arn,
-      aws_lambda_function.remediator.arn
+      aws_lambda_function.lambda["validator"].arn,
+      aws_lambda_function.lambda["request_approval"].arn,
+      aws_lambda_function.lambda["remediator"].arn
     ]
   }
 }
@@ -52,4 +52,39 @@ resource "aws_iam_policy" "lambda_policy" {
 resource "aws_iam_policy" "lambda_request_approval_policy" {
   name   = "${var.project_name}-lambda-request-approval-policy"
   policy = data.aws_iam_policy_document.lambda_request_approval_policy_doc.json
+}
+
+resource "aws_iam_policy" "lambda_approver_callback_policy" {
+  name        = "${var.project_name}-lambda-approver-callback"
+  description = "Allow approver lambda to resume Step Functions waiting tasks"
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect   = "Allow"
+        Action   = ["states:SendTaskSuccess", "states:SendTaskFailure"]
+        Resource = "*"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_policy" "lambda_remediator_policy" {
+  name        = "${var.project_name}-lambda-remediator-callback"
+  description = "Allow remediator lambda to detach only the admin policy from the student user"
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect   = "Allow"
+        Action   = ["iam:DetachUserPolicy"]
+        Resource = aws_iam_user.student.arn
+        Condition = {
+          StringEquals = {
+            "iam:PolicyARN" = var.admin_access_policy_arn
+          }
+        }
+      }
+    ]
+  })
 }

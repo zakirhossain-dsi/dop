@@ -1,77 +1,69 @@
-data "archive_file" "validator_zip" {
-  type        = "zip"
-  source_file = "${path.module}/lambda/validator.py"
-  output_path = "${path.module}/lambda/validator.zip"
-}
+locals {
+  lambda_dir = "${path.module}/lambda"
+  common_tags = {
+    project   = var.project_name
+    ManagedBy = "Terraform"
+  }
 
-data "archive_file" "notifier_zip" {
-  type        = "zip"
-  source_file = "${path.module}/lambda/request_approval.py"
-  output_path = "${path.module}/lambda/request_approval.zip"
-}
+  lambdas = {
+    validator = {
+      source_file = "${local.lambda_dir}/validator.py"
+      handler     = "validator.handler"
+      role_key    = "lambda"
+      env = {
+        ADMIN_POLICY_ARN = var.admin_access_policy_arn
+      }
+    }
+    request_approval = {
+      source_file = "${local.lambda_dir}/request_approval.py"
+      handler     = "request_approval.handler"
+      role_key    = "lambda_request_approval"
+      env = {
+        SNS_TOPIC_ARN = aws_sns_topic.approval_notifications.arn
+      }
+    }
 
-data "archive_file" "approver_zip" {
-  type        = "zip"
-  source_file = "${path.module}/lambda/approver.py"
-  output_path = "${path.module}/lambda/approver.zip"
-}
-
-data "archive_file" "remediator_zip" {
-  type        = "zip"
-  source_file = "${path.module}/lambda/remediator.py"
-  output_path = "${path.module}/lambda/remediator.zip"
-}
-
-resource "aws_lambda_function" "validator" {
-  function_name    = "${var.project_name}-validator"
-  role             = aws_iam_role.iam_roles["lambda"].arn
-  handler          = "validator.handler"
-  runtime          = var.python_version
-  filename         = data.archive_file.validator_zip.output_path
-  source_code_hash = data.archive_file.validator_zip.output_base64sha256
-
-  environment {
-    variables = {
-      ADMIN_POLICY_ARN = var.admin_access_policy_arn
+    approver = {
+      source_file = "${local.lambda_dir}/approver.py"
+      handler     = "approver.handler"
+      role_key    = "lambda_approver"
+      env         = {}
+    }
+    remediator = {
+      source_file = "${local.lambda_dir}/remediator.py"
+      handler     = "remediator.handler"
+      role_key    = "lambda_remediator"
+      env = {
+        ADMIN_POLICY_ARN = var.admin_access_policy_arn
+      }
     }
   }
 }
 
-resource "aws_lambda_function" "request_approval" {
-  function_name    = "${var.project_name}-request-approval"
-  role             = aws_iam_role.iam_roles["lambda_request_approval"].arn
-  handler          = "request_approval.handler"
-  runtime          = var.python_version
-  filename         = data.archive_file.notifier_zip.output_path
-  source_code_hash = data.archive_file.notifier_zip.output_base64sha256
-
-  environment {
-    variables = {
-      SNS_TOPIC_ARN = aws_sns_topic.approval_notifications.arn
-    }
-  }
+data "archive_file" "lambda_zip" {
+  for_each    = local.lambdas
+  type        = "zip"
+  source_file = each.value.source_file
+  output_path = "${local.lambda_dir}/${each.key}.zip"
 }
 
-resource "aws_lambda_function" "approver" {
-  function_name    = "${var.project_name}-approver"
-  role             = aws_iam_role.iam_roles["lambda_approver"].arn
-  handler          = "approver.handler"
+resource "aws_lambda_function" "lambda" {
+  for_each         = local.lambdas
+  function_name    = "${var.project_name}-${replace(each.key, "_", "-")}"
+  role             = aws_iam_role.iam_roles[each.value.role_key].arn
+  handler          = each.value.handler
   runtime          = var.python_version
-  filename         = data.archive_file.approver_zip.output_path
-  source_code_hash = data.archive_file.approver_zip.output_base64sha256
-}
+  filename         = data.archive_file.lambda_zip[each.key].output_path
+  source_code_hash = data.archive_file.lambda_zip[each.key].output_base64sha256
 
-resource "aws_lambda_function" "remediator" {
-  function_name    = "${var.project_name}-remediator"
-  role             = aws_iam_role.iam_roles["lambda_remediator"].arn
-  runtime          = var.python_version
-  handler          = "remediator.handler"
-  filename         = data.archive_file.remediator_zip.output_path
-  source_code_hash = data.archive_file.remediator_zip.output_base64sha256
-
-  environment {
-    variables = {
-      ADMIN_POLICY_ARN = var.admin_access_policy_arn
+  dynamic "environment" {
+    for_each = length(each.value.env) > 0 ? [1] : []
+    content {
+      variables = each.value.env
     }
   }
+  tags = merge(local.common_tags, {
+    component = "lambda"
+    Name      = each.key
+  })
 }

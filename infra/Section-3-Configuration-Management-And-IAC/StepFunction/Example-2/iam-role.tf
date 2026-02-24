@@ -1,17 +1,23 @@
 locals {
-  identifiers = {
-    cw_events               = "events.amazonaws.com"
-    state_machine           = "states.amazonaws.com"
-    lambda                  = "lambda.amazonaws.com"
-    lambda_request_approval = "lambda.amazonaws.com"
-    lambda_approver         = "lambda.amazonaws.com"
-    lambda_remediator       = "lambda.amazonaws.com"
+  service_identifiers = {
+    event  = "events.amazonaws.com"
+    states = "states.amazonaws.com"
+    lambda = "lambda.amazonaws.com"
+  }
+  role_trust = {
+    cw_events               = local.service_identifiers.event
+    state_machine           = local.service_identifiers.states
+    lambda                  = local.service_identifiers.lambda
+    lambda_request_approval = local.service_identifiers.lambda
+    lambda_approver         = local.service_identifiers.lambda
+    lambda_remediator       = local.service_identifiers.lambda
   }
 }
 
 data "aws_iam_policy_document" "assume_policy" {
-  for_each = local.identifiers
+  for_each = local.role_trust
   statement {
+    sid     = "AssumeRole"
     actions = ["sts:AssumeRole"]
     principals {
       type        = "Service"
@@ -21,7 +27,7 @@ data "aws_iam_policy_document" "assume_policy" {
 }
 
 resource "aws_iam_role" "iam_roles" {
-  for_each           = local.identifiers
+  for_each           = local.role_trust
   name               = "${var.project_name}-${each.key}-role"
   assume_role_policy = data.aws_iam_policy_document.assume_policy[each.key].json
 }

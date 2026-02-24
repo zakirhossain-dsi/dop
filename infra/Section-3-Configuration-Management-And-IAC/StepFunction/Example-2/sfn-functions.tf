@@ -7,7 +7,7 @@ locals {
         Type     = "Task"
         Resource = "arn:aws:states:::lambda:invoke"
         Parameters = {
-          FunctionName = aws_lambda_function.validator.arn
+          FunctionName = aws_lambda_function.lambda["validator"].arn
           "Payload.$"  = "$"
         }
         OutputPath = "$.Payload"
@@ -39,7 +39,7 @@ locals {
         Type     = "Task"
         Resource = "arn:aws:states:::lambda:invoke.waitForTaskToken"
         Parameters = {
-          FunctionName = aws_lambda_function.request_approval.arn
+          FunctionName = aws_lambda_function.lambda["request_approval"].arn
           Payload = {
             "taskToken.$"        = "$$.Task.Token"
             "event.$"            = "$"
@@ -73,7 +73,7 @@ locals {
         Type     = "Task"
         Resource = "arn:aws:states:::lambda:invoke"
         Parameters = {
-          FunctionName = aws_lambda_function.remediator.arn
+          FunctionName = aws_lambda_function.lambda["remediator"].arn
           "Payload.$"  = "$"
         }
         Next = "EndState"
