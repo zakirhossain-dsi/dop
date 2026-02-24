@@ -43,15 +43,31 @@ locals {
           Payload = {
             "taskToken.$"        = "$$.Task.Token"
             "event.$"            = "$"
-            "approvalApiBaseUrl" = "https://abc.com/approval"
+            "approvalApiBaseUrl" = local.approval_api_base_url
           }
         }
         TimeoutSeconds = 120
+        ResultPath     = "$.approval" # <-- store callback output here
         Catch = [
           { ErrorEquals = ["States.Timeout"], Next = "EndState" },
           { ErrorEquals = ["States.TaskFailed"], Next = "EndState" }
         ]
-        Next = "EndState"
+        Next = "Decision"
+      }
+      Decision = {
+        Type = "Choice"
+        Choices = [
+          {
+            Variable     = "$.approval.decision"
+            StringEquals = "APPROVE"
+            Next         = "EndState"
+          },
+          {
+            Variable     = "$.approval.decision"
+            StringEquals = "REJECT"
+            Next         = "EndState"
+          }
+        ]
       }
       EndState = {
         Type = "Succeed"

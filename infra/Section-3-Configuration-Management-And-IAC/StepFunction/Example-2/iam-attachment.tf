@@ -22,3 +22,23 @@ resource "aws_iam_role_policy_attachment" "lambda_req_approval_attach_2" {
   policy_arn = aws_iam_policy.lambda_policy.arn
   role       = aws_iam_role.iam_roles["lambda_request_approval"].name
 }
+
+resource "aws_iam_role_policy_attachment" "lambda_approver_attach" {
+  policy_arn = aws_iam_policy.lambda_policy.arn
+  role       = aws_iam_role.iam_roles["lambda_approver"].name
+}
+
+resource "aws_iam_role_policy" "lambda_approver_callback" {
+  name = "${var.project_name}-lambda-approver-callback"
+  role = aws_iam_role.iam_roles["lambda_approver"].id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect   = "Allow"
+        Action   = ["states:SendTaskSuccess", "states:SendTaskFailure"]
+        Resource = "*"
+      }
+    ]
+  })
+}
