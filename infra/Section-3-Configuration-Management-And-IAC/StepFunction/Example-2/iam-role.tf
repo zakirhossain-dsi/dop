@@ -1,8 +1,9 @@
 locals {
   identifiers = {
-    cw_events     = "events.amazonaws.com"
-    state_machine = "states.amazonaws.com"
-    lambda        = "lambda.amazonaws.com"
+    cw_events               = "events.amazonaws.com"
+    state_machine           = "states.amazonaws.com"
+    lambda_request_approval = "lambda.amazonaws.com"
+    lambda                  = "lambda.amazonaws.com"
   }
 }
 

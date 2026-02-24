@@ -18,3 +18,24 @@ resource "aws_lambda_function" "validator" {
     }
   }
 }
+
+data "archive_file" "notifier_zip" {
+  type        = "zip"
+  source_file = "${path.module}/lambda/request_approval.py"
+  output_path = "${path.module}/lambda/request_approval.zip"
+}
+
+resource "aws_lambda_function" "request_approval" {
+  function_name    = "${var.project_name}-request-approval"
+  role             = aws_iam_role.iam_roles["lambda_request_approval"].arn
+  handler          = "request_approval.handler"
+  runtime          = var.python_version
+  filename         = data.archive_file.notifier_zip.output_path
+  source_code_hash = data.archive_file.notifier_zip.output_base64sha256
+
+  environment {
+    variables = {
+      SNS_TOPIC_ARN = aws_sns_topic.approval_notifications.arn
+    }
+  }
+}

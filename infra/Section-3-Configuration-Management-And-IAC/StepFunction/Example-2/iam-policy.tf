@@ -10,6 +10,7 @@ data "aws_iam_policy_document" "sfn_policy_doc" {
     actions = ["lambda:InvokeFunction"]
     resources = [
       aws_lambda_function.validator.arn,
+      aws_lambda_function.request_approval.arn
     ]
   }
 }
@@ -22,6 +23,13 @@ data "aws_iam_policy_document" "lambda_policy_doc" {
       "logs:PutLogEvents"
     ]
     resources = ["*"]
+  }
+}
+
+data "aws_iam_policy_document" "lambda_request_approval_policy_doc" {
+  statement {
+    actions   = ["sns:Publish"]
+    resources = [aws_sns_topic.approval_notifications.arn]
   }
 }
 
@@ -38,4 +46,9 @@ resource "aws_iam_policy" "sfn_policy" {
 resource "aws_iam_policy" "lambda_policy" {
   policy = data.aws_iam_policy_document.lambda_policy_doc.json
   name   = "${var.project_name}-lambda-policy"
+}
+
+resource "aws_iam_policy" "lambda_request_approval_policy" {
+  name   = "${var.project_name}-lambda-request-approval-policy"
+  policy = data.aws_iam_policy_document.lambda_request_approval_policy_doc.json
 }

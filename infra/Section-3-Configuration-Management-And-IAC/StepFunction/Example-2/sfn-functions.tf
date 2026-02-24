@@ -11,7 +11,50 @@ locals {
           "Payload.$"  = "$"
         }
         OutputPath = "$.Payload"
-        End        = true
+        Next       = "CheckAdminAccess"
+      }
+      CheckAdminAccess = {
+        Type = "Choice"
+        Choices = [
+          {
+            Variable      = "$.isAdminAccess"
+            BooleanEquals = true
+            Next          = "CheckUserName"
+          }
+        ]
+        Default = "EndState"
+      }
+      CheckUserName = {
+        Type = "Choice"
+        Choices = [
+          {
+            Variable  = "$.userName"
+            IsPresent = true
+            Next      = "RequestApproval"
+          }
+        ]
+        Default = "EndState"
+      }
+      RequestApproval = {
+        Type     = "Task"
+        Resource = "arn:aws:states:::lambda:invoke.waitForTaskToken"
+        Parameters = {
+          FunctionName = aws_lambda_function.request_approval.arn
+          Payload = {
+            "taskToken.$"        = "$$.Task.Token"
+            "event.$"            = "$"
+            "approvalApiBaseUrl" = "https://abc.com/approval"
+          }
+        }
+        TimeoutSeconds = 120
+        Catch = [
+          { ErrorEquals = ["States.Timeout"], Next = "EndState" },
+          { ErrorEquals = ["States.TaskFailed"], Next = "EndState" }
+        ]
+        Next = "EndState"
+      }
+      EndState = {
+        Type = "Succeed"
       }
     }
   }
