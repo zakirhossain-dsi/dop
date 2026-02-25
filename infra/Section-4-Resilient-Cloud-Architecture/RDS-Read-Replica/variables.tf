@@ -1,0 +1,9 @@
+variable "region" { type = string }
+variable "profile" { type = string }
+variable "project_name" { type = string }
+variable "image_id" { type = string }
+variable "instance_type" { type = string }
+variable "all_ipv4" { type = string }
+variable "db_username" { type = string }
+variable "db_password" { type = string }
+variable "db_name" { type = string }
