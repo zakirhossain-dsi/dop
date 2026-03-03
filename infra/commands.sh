@@ -9,3 +9,8 @@ aws ssm get-parameters-by-path --path "/payments-app" --recursive
 aws dax describe-clusters --query "Clusters[*].ClusterDiscoveryEndpoint" \
 --profile=terraform-admin \
 --region=ap-southeast-1
+
+cd /usr/share/nignx/html
+systemctl status nginx
+curl -I <domain-name>
+nslookup <domain-name>
