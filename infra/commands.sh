@@ -16,3 +16,6 @@ curl -I <domain-name>
 nslookup <domain-name>
 
 aws s3 mb s3://zakir
+
+stress -c 4
+top
