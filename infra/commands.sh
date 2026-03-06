@@ -14,3 +14,5 @@ cd /usr/share/nignx/html
 systemctl status nginx
 curl -I <domain-name>
 nslookup <domain-name>
+
+aws s3 mb s3://zakir
