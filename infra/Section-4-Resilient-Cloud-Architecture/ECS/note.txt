@@ -1,0 +1,17 @@
+// EC2 related config
+asg.tf
+launch_template.tf
+iam-role.tf
+iam-attachment.tf
+sg.tf
+
+// ECS related config
+ecs-cluster.tf
+ecs-task-definition.tf
+ecs-service.tf
+
+// Common config
+outputs.tf
+providers.tf
+variables.tf
+terraform.tfvars

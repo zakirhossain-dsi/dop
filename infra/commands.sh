@@ -19,3 +19,5 @@ aws s3 mb s3://zakir
 
 stress -c 4
 top
+
+chmod 400 "terraform-key.pem"
