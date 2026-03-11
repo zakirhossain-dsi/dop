@@ -1,0 +1,10 @@
+variable "aws_region" { type = string }
+variable "aws_profile" { type = string }
+variable "project_name" { type = string }
+variable "instance_type" { type = list(string) }
+variable "public_subnet_ids" { type = list(string) }
+variable "vpc_id" { type = string }
+variable "all_ips_cidr" { type = string }
+variable "eks_cluster_version" { type = string }
+variable "ami_type" { type = string }
+variable "capacity_type" { type = string }

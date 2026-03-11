@@ -3,15 +3,12 @@ data "aws_iam_role" "ecs_task_execution_role" {
 }
 
 resource "aws_ecs_task_definition" "demo_task_definition" {
-  family                   = "nginx-task-definition"
+  family                   = "fargate-task-definition"
   network_mode             = "awsvpc"
-  requires_compatibilities = ["EC2"]
+  requires_compatibilities = ["FARGATE"]
   cpu                      = "256"
   memory                   = "512"
 
-  # The ecsTaskExecutionRole is the IAM role that ECS uses to run your task, especially during the startup phase of the container.
-  # It allows ECS to perform actions on behalf of the task, but not inside your application code.
-  # It allows the ECS agent / Fargate infrastructure to perform operations required to start the container.
   execution_role_arn = data.aws_iam_role.ecs_task_execution_role.arn
 
   runtime_platform {
