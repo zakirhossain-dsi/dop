@@ -21,3 +21,7 @@ stress -c 4
 top
 
 chmod 400 "terraform-key.pem"
+cat /etc/fstab
+mount
+
+mount -t luster -o noatime, flock <DNS name>@tcp:/<mount name> /<directory name to be mounted>
