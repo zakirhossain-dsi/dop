@@ -55,9 +55,16 @@ Example:
 ssh -i terraform-key.pem ec2-user@172.31.100.10
 ```
 ### Step 5: Then on the private EC2, test S3
+
 ```bash
-aws s3 ls s3://<bucket-name>
-aws s3 cp s3://<bucket-name>/hello.txt -
+aws s3 ls s3://<bucket-name> \
+--endpoint-url https://bucket.<vpc endpoint dns name>
+```
+Example:
+
+```bash
+aws s3 ls s3://<bucket-name> \
+--endpoint-url https://bucket.vpce-0142b4695a7d167b3-1ild1boi.s3.ap-southeast-1.vpce.amazonaws.com
 ```
 ---
 
@@ -135,7 +142,14 @@ From the public EC2:
 ssh ec2-user@172.31.100.144
 ```
 ### Step 5: Then on the private EC2, test S3
+
 ```bash
-aws s3 ls s3://<bucket-name>
-aws s3 cp s3://<bucket-name>/hello.txt -
+aws s3 ls s3://<bucket-name> \
+--endpoint-url https://bucket.<vpc endpoint dns name>
+```
+Example:
+
+```bash
+aws s3 ls s3://<bucket-name> \
+--endpoint-url https://bucket.vpce-0142b4695a7d167b3-1ild1boi.s3.ap-southeast-1.vpce.amazonaws.com
 ```
