@@ -1,4 +1,4 @@
-resource "aws_instance" "efs_clients" {
+resource "aws_instance" "efs_client" {
   ami                         = var.ec2_image_id
   instance_type               = var.ec2_instance_type
   subnet_id                   = var.public_subnet_ids[0]
