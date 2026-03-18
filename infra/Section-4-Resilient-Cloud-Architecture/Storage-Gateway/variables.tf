@@ -1,0 +1,11 @@
+variable "aws_region" { type = string }
+variable "aws_profile" { type = string }
+variable "project_name" { type = string }
+variable "client_ami_id" { type = string }
+variable "client_instance_type" { type = string }
+variable "client_ssh_key_name" { type = string }
+variable "gateway_host_instance_type" { type = string }
+variable "bucket_name" { type = string }
+variable "gateway_name" { type = string }
+variable "mount_point" { type = string }
+variable "activation_key" { type = string }
