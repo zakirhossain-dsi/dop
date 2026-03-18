@@ -5,11 +5,6 @@ resource "aws_storagegateway_gateway" "file_gateway" {
   activation_key   = var.activation_key
 }
 
-data "aws_storagegateway_local_disk" "cache_disk" {
-  gateway_arn = aws_storagegateway_gateway.file_gateway.arn
-  disk_path   = "/dev/nvme1n1"
-}
-
 resource "aws_storagegateway_cache" "cache" {
   gateway_arn = aws_storagegateway_gateway.file_gateway.arn
   disk_id     = data.aws_storagegateway_local_disk.cache_disk.id

@@ -15,6 +15,11 @@ data "aws_subnets" "default" {
   }
 }
 
+data "aws_storagegateway_local_disk" "cache_disk" {
+  gateway_arn = aws_storagegateway_gateway.file_gateway.arn
+  disk_path   = "/dev/nvme1n1"
+}
+
 #resource "time_sleep" "wait_for_gateway_boot" {
 #  depends_on      = [aws_instance.gateway_host, aws_volume_attachment.cache]
 #  create_duration = "180s"
