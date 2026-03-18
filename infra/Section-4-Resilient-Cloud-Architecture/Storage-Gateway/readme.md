@@ -19,6 +19,7 @@ Amazon S3 Bucket
 ```
 
 ---
+<img src="./architecture.png" alt="Architecture Diagram" width="1000"></img>
 
 ## 🔑 Key Concepts
 
