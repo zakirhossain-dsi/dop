@@ -1,0 +1,9 @@
+variable "aws_region" { type = string }
+variable "aws_profile" { type = string }
+variable "vpc_cidr" { type = string }
+variable "public_subnet_cidrs" { type = list(string) }
+variable "az_names" { type = list(string) }
+variable "default_tags" { type = map(string) }
+variable "ec2_ami" { type = string }
+variable "ec2_image_type" { type = string }
+variable "ec2_ssh_key_name" { type = string }
