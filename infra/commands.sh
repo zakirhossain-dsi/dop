@@ -25,3 +25,6 @@ cat /etc/fstab
 mount
 
 mount -t luster -o noatime, flock <DNS name>@tcp:/<mount name> /<directory name to be mounted>
+
+aws configure list-profiles
+aws sso login --profile nishat
