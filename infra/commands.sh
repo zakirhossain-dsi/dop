@@ -26,5 +26,14 @@ mount
 
 mount -t luster -o noatime, flock <DNS name>@tcp:/<mount name> /<directory name to be mounted>
 
+aws configure sso
+#SSO session name (Recommended): nishat
+#SSO start URL [None]: https://d-90671b1e5c.awsapps.com/start
+#SSO region [None]: ap-southeast-1
+#SSO registration scopes [sso:account:access]:
+
 aws configure list-profiles
 aws sso login --profile nishat
+aws s3 ls --profile nishat
+
+# SAML Tracer
