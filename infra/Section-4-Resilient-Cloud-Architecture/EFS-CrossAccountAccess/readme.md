@@ -280,8 +280,8 @@ Expected:
 Test write:
 
 ```bash
-echo "hello" > /shared-storage/test.txt
-cat /shared-storage/test.txt
+echo "hello" > /shared-storage/secret.txt
+cat /shared-storage/secret.txt
 ```
 
 ---
